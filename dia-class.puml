@@ -1,0 +1,66 @@
+@startuml
+class WashingYard {
+  - List<WashingPlace> washingPlaces
+  - OffsetDateTime openingTime
+  - OffsetDateTime closingTime
+}
+
+class WashingPlace {
+  int position
+}
+
+class Vehicle {
+  - VehicleType type
+  - String ownerName;
+  - String licensePlate;
+  - String color;
+  - String model;
+  - String brand;
+}
+
+class ServicePrice {
+  - ServiceType type
+  - BigDecimal price
+}
+
+class Operator {}
+
+class WashingService {
+  - Operator operator
+  - Vehicle vehicle
+  - WashingPlace washingPlace
+  - ServiceType serviceType
+  - BigDecimal totalToPay
+  - OffsetDateTime serviceTime
+  - WashingServiceStatus status
+}
+
+enum WashingServiceStatus {
+  + IN_PROGRESS
+  + FINISHED
+  + CANCELED
+}
+
+enum VehicleType {
+  + MOTORCYCLE
+  + CAR
+}
+
+enum ServiceType {
+  + BASIC
+  + COMPLETE
+}
+
+WashingService "1" --* "1" Vehicle
+WashingService "1" --* "1" Operator
+WashingService "1" --* "1" WashingPlace
+WashingService -- ServiceType
+WashingService -- ServicePrice
+
+Vehicle --* VehicleType
+
+WashingYard "1" --* "*" WashingPlace
+
+ServicePrice --* ServiceType
+
+@enduml
