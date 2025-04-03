@@ -73,6 +73,10 @@ public class OperatorController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(String id) {
+    if (!this.operatorRepository.existsById(id)) {
+      return ResponseEntity.notFound().build();
+    }
+
     operatorRepository.deleteById(id);
     return ResponseEntity.noContent().build();
   }
