@@ -10,17 +10,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
+import me.rogerioferreira.lavajato.application.mappers.OperatorMapper;
+import me.rogerioferreira.lavajato.application.utils.ConstraintsValidator;
 import me.rogerioferreira.lavajato.domain.entities.Operator;
 import me.rogerioferreira.lavajato.domain.repositories.OperatorRespository;
+import me.rogerioferreira.lavajato.presentation.dtos.OperatorDto;
 
 @RestController
 @RequestMapping("/operators")
 public class OperatorController {
   @Autowired
   private OperatorRespository operatorRepository;
+
+  @Autowired
+  private OperatorMapper operatorMapper;
+
+  @Autowired
+  private ConstraintsValidator validator;
 
   @GetMapping
   public ResponseEntity<List<Operator>> getAll() {
@@ -39,13 +48,27 @@ public class OperatorController {
   }
 
   @PostMapping
-  public ResponseEntity<Operator> create(@Valid @RequestBody Operator operator) {
-    return ResponseEntity.ok().body(operatorRepository.save(operator));
+  public ResponseEntity<Operator> create(@RequestBody OperatorDto operatorDto) {
+    var model = this.operatorMapper.toOperator(operatorDto);
+
+    this.validator.validate(model);
+
+    return ResponseEntity.ok().body(operatorRepository.save(model));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Operator> update(@Valid @RequestBody Operator operator) {
-    return ResponseEntity.ok().body(operatorRepository.save(operator));
+  public ResponseEntity<Operator> update(@RequestParam String id, @RequestBody OperatorDto operator) {
+    if (!this.operatorRepository.existsById(id)) {
+      return ResponseEntity.notFound().build();
+    }
+
+    var model = this.operatorMapper.toOperator(operator);
+
+    this.validator.validate(model);
+
+    model.setId(id);
+
+    return ResponseEntity.ok().body(operatorRepository.save(model));
   }
 
   @DeleteMapping("/{id}")
