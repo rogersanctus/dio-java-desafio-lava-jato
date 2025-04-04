@@ -8,12 +8,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import me.rogerioferreira.lavajato.infra.models.WithId;
 import me.rogerioferreira.lavajato.domain.enums.VehicleType;
 import me.rogerioferreira.lavajato.domain.rules.Constraints;
 
 @Entity
 @Data
-public class Vehicle {
+public class Vehicle implements WithId {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;

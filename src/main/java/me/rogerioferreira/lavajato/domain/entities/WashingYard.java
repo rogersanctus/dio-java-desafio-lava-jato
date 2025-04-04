@@ -12,10 +12,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import me.rogerioferreira.lavajato.infra.models.WithId;
 
 @Entity
 @Data
-public class WashingYard {
+public class WashingYard implements WithId {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;

@@ -12,12 +12,13 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import me.rogerioferreira.lavajato.infra.models.WithId;
 import me.rogerioferreira.lavajato.domain.enums.ServiceType;
 import me.rogerioferreira.lavajato.domain.enums.WashingServiceStatus;
 
 @Entity
 @Data
-public class WashingService {
+public class WashingService implements WithId {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;

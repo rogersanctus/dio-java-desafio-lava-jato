@@ -8,10 +8,11 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import me.rogerioferreira.lavajato.infra.models.WithId;
 
 @Entity
 @Data
-public class WashingPlace {
+public class WashingPlace implements WithId {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;

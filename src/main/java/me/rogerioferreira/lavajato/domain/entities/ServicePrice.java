@@ -10,11 +10,12 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import me.rogerioferreira.lavajato.infra.models.WithId;
 import me.rogerioferreira.lavajato.domain.enums.ServiceType;
 
 @Entity
 @Data
-public class ServicePrice {
+public class ServicePrice implements WithId {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
