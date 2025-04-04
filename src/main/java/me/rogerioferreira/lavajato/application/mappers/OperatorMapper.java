@@ -9,7 +9,7 @@ import me.rogerioferreira.lavajato.presentation.dtos.OperatorDto;
 @Mapper(componentModel = "spring")
 public interface OperatorMapper {
   @Mapping(target = "id", ignore = true)
-  Operator toOperator(OperatorDto operatorDto);
+  Operator toModel(OperatorDto operatorDto);
 
-  OperatorDto toOperatorDto(Operator operator);
+  OperatorDto toDto(Operator operator);
 }

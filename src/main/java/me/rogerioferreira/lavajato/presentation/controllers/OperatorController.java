@@ -3,6 +3,7 @@ package me.rogerioferreira.lavajato.presentation.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,11 +50,13 @@ public class OperatorController {
 
   @PostMapping
   public ResponseEntity<Operator> create(@RequestBody OperatorDto operatorDto) {
-    var model = this.operatorMapper.toOperator(operatorDto);
+    var model = this.operatorMapper.toModel(operatorDto);
 
     this.validator.validate(model);
 
-    return ResponseEntity.ok().body(operatorRepository.save(model));
+    return ResponseEntity
+        .status(HttpStatus.CREATED)
+        .body(operatorRepository.save(model));
   }
 
   @PutMapping("/{id}")
@@ -62,7 +65,7 @@ public class OperatorController {
       return ResponseEntity.notFound().build();
     }
 
-    var model = this.operatorMapper.toOperator(operator);
+    var model = this.operatorMapper.toModel(operator);
 
     this.validator.validate(model);
 
