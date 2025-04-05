@@ -26,7 +26,7 @@ public class Vehicle implements WithId {
   @Size(min = Constraints.MIN_NAME_LENGTH, max = Constraints.MAX_NAME_LENGTH)
   private String ownerName;
 
-  @NotNull
+  @NotBlank
   private String licensePlate;
 
   @NotBlank
