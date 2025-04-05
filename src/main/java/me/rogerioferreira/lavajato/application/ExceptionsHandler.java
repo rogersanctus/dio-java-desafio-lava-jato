@@ -1,21 +1,23 @@
 package me.rogerioferreira.lavajato.application;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
-  @ExceptionHandler(RuntimeException.class)
-  public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
-    return ResponseEntity.badRequest().body(ex.getMessage());
-  }
-
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException ex) {
     var error = new HashMap<String, Object>();
@@ -28,5 +30,38 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     }
 
     return ResponseEntity.badRequest().body(error);
+  }
+
+  @Override
+  protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers,
+      HttpStatusCode status, WebRequest request) {
+    var error = new HashMap<String, Object>();
+    var errors = new HashMap<String, String>();
+
+    if (ex.getCause() instanceof InvalidFormatException invalidFormatException) {
+      error.put("errors", errors);
+      var field = invalidFormatException.getPath().isEmpty() ? "unknown"
+          : invalidFormatException.getPath().get(0).getFieldName();
+
+      field = field == null ? "unknown" : field;
+
+      String invalidValue = invalidFormatException.getValue().toString();
+      var fieldError = "Invalid value: " + invalidValue;
+
+      if (invalidFormatException.getTargetType().isEnum()) {
+        var enumValues = Arrays.stream(invalidFormatException.getTargetType().getEnumConstants())
+            .map(enumConstant -> enumConstant.toString())
+            .toList()
+            .toString();
+
+        fieldError += ". Valid values: " + enumValues.toString();
+      }
+
+      errors.put(field, fieldError);
+
+      return ResponseEntity.badRequest().body(error);
+    }
+
+    return super.handleHttpMessageNotReadable(ex, headers, status, request);
   }
 }
