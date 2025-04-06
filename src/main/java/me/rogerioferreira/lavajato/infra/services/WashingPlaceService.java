@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import me.rogerioferreira.lavajato.application.mappers.WashingPlaceMapper;
 import me.rogerioferreira.lavajato.domain.entities.WashingPlace;
+import me.rogerioferreira.lavajato.domain.exceptions.DuplicatedValueException;
 import me.rogerioferreira.lavajato.domain.repositories.WashingPlaceRepository;
 import me.rogerioferreira.lavajato.domain.rules.ConstraintsValidator;
 
@@ -30,7 +31,7 @@ public class WashingPlaceService {
         : this.washingPlaceRepository.existsByPosition(place.getPosition());
 
     if (exists) {
-      throw new IllegalArgumentException("Washing Place position already exists");
+      throw new DuplicatedValueException("position", place.getPosition());
     }
 
     this.validator.validate(place);

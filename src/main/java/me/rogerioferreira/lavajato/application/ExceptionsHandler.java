@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import jakarta.validation.ConstraintViolationException;
+import me.rogerioferreira.lavajato.domain.exceptions.DuplicatedValueException;
 
 @RestControllerAdvice
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
@@ -32,13 +33,13 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     return ResponseEntity.badRequest().body(error);
   }
 
-  @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException ex) {
+  @ExceptionHandler(DuplicatedValueException.class)
+  public ResponseEntity<?> handleDuplicatedValueException(DuplicatedValueException ex) {
     var error = new HashMap<String, Object>();
     var errors = new HashMap<String, String>();
 
     error.put("errors", errors);
-    errors.put("message", ex.getMessage());
+    errors.put(ex.getField(), ex.getMessage());
 
     return ResponseEntity.badRequest().body(error);
   }
