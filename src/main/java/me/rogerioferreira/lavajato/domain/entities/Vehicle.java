@@ -7,13 +7,17 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.rogerioferreira.lavajato.infra.models.WithId;
 import me.rogerioferreira.lavajato.domain.enums.VehicleType;
 import me.rogerioferreira.lavajato.domain.rules.Constraints;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Vehicle implements WithId {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

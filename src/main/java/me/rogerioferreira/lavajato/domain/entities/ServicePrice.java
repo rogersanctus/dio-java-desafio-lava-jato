@@ -9,12 +9,16 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.rogerioferreira.lavajato.infra.models.WithId;
 import me.rogerioferreira.lavajato.domain.enums.ServiceType;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ServicePrice implements WithId {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
