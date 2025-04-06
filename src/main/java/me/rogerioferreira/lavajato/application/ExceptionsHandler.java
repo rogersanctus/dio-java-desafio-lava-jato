@@ -32,6 +32,17 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     return ResponseEntity.badRequest().body(error);
   }
 
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException ex) {
+    var error = new HashMap<String, Object>();
+    var errors = new HashMap<String, String>();
+
+    error.put("errors", errors);
+    errors.put("message", ex.getMessage());
+
+    return ResponseEntity.badRequest().body(error);
+  }
+
   @Override
   protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers,
       HttpStatusCode status, WebRequest request) {
