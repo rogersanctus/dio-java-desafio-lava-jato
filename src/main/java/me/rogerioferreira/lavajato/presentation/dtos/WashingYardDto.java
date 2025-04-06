@@ -1,12 +1,12 @@
 package me.rogerioferreira.lavajato.presentation.dtos;
 
-import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.List;
 
 import me.rogerioferreira.lavajato.domain.entities.WashingPlace;
 
 public record WashingYardDto(
-    OffsetDateTime openingTime,
-    OffsetDateTime closingTime,
+    OffsetTime openingTime,
+    OffsetTime closingTime,
     List<WashingPlace> washingPlaces) {
 }

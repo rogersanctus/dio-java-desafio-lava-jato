@@ -1,6 +1,6 @@
 package me.rogerioferreira.lavajato.domain.entities;
 
-import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -28,9 +28,9 @@ public class WashingYard implements WithId {
   private List<WashingPlace> washingPlaces;
 
   @NotNull
-  private OffsetDateTime openingTime;
+  private OffsetTime openingTime;
 
   @NotNull
   // TODO: Validate if the closing time is after the opening time
-  private OffsetDateTime closingTime;
+  private OffsetTime closingTime;
 }
