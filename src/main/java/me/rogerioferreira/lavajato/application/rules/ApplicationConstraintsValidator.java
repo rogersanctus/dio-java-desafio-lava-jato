@@ -1,12 +1,13 @@
-package me.rogerioferreira.lavajato.application.utils;
+package me.rogerioferreira.lavajato.application.rules;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jakarta.validation.ConstraintViolationException;
+import me.rogerioferreira.lavajato.domain.rules.ConstraintsValidator;
 
 @Component
-public class ConstraintsValidator {
+public class ApplicationConstraintsValidator implements ConstraintsValidator {
   @Autowired
   private jakarta.validation.Validator validator;
 

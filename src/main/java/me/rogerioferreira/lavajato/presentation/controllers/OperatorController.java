@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.rogerioferreira.lavajato.application.mappers.OperatorMapper;
-import me.rogerioferreira.lavajato.application.utils.ConstraintsValidator;
 import me.rogerioferreira.lavajato.domain.entities.Operator;
 import me.rogerioferreira.lavajato.domain.repositories.OperatorRespository;
+import me.rogerioferreira.lavajato.domain.rules.ConstraintsValidator;
 import me.rogerioferreira.lavajato.presentation.dtos.OperatorDto;
 
 @RestController

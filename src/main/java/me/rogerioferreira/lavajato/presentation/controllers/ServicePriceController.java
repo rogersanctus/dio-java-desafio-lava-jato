@@ -15,31 +15,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.rogerioferreira.lavajato.application.mappers.ServicePriceMapper;
-import me.rogerioferreira.lavajato.application.utils.ConstraintsValidator;
 import me.rogerioferreira.lavajato.domain.entities.ServicePrice;
 import me.rogerioferreira.lavajato.domain.repositories.ServicePriceRepository;
+import me.rogerioferreira.lavajato.domain.rules.ConstraintsValidator;
 import me.rogerioferreira.lavajato.presentation.dtos.ServicePriceDto;
 
 @RestController
 @RequestMapping("/services-prices")
 public class ServicePriceController {
   @Autowired
-  private ServicePriceRepository vehicleRepository;
+  private ServicePriceRepository servicePriceRepository;
 
   @Autowired
-  private ServicePriceMapper vehicleMapper;
+  private ServicePriceMapper servicePriceMapper;
 
   @Autowired
   private ConstraintsValidator validator;
 
   @GetMapping()
   public ResponseEntity<List<ServicePrice>> getAll() {
-    return ResponseEntity.ok().body(vehicleRepository.findAll());
+    return ResponseEntity.ok().body(servicePriceRepository.findAll());
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<ServicePrice> getById(String id) {
-    var mayBeServicePrice = vehicleRepository.findById(id);
+    var mayBeServicePrice = servicePriceRepository.findById(id);
 
     if (mayBeServicePrice.isEmpty()) {
       return ResponseEntity.notFound().build();
@@ -49,38 +49,38 @@ public class ServicePriceController {
   }
 
   @PostMapping()
-  public ResponseEntity<ServicePrice> create(@RequestBody ServicePriceDto vehicle) {
-    var model = this.vehicleMapper.toModel(vehicle);
+  public ResponseEntity<ServicePrice> create(@RequestBody ServicePriceDto servicePrice) {
+    var model = this.servicePriceMapper.toModel(servicePrice);
 
     this.validator.validate(model);
 
     return ResponseEntity
         .status(HttpStatus.CREATED)
-        .body(vehicleRepository.save(model));
+        .body(servicePriceRepository.save(model));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<ServicePrice> update(@RequestParam String id, @RequestBody ServicePriceDto vehicleDto) {
-    if (!this.vehicleRepository.existsById(id)) {
+  public ResponseEntity<ServicePrice> update(@RequestParam String id, @RequestBody ServicePriceDto servicePriceDto) {
+    if (!this.servicePriceRepository.existsById(id)) {
       return ResponseEntity.notFound().build();
     }
 
-    var model = this.vehicleMapper.toModel(vehicleDto);
+    var model = this.servicePriceMapper.toModel(servicePriceDto);
 
     this.validator.validate(model);
 
     model.setId(id);
 
-    return ResponseEntity.ok().body(vehicleRepository.save(model));
+    return ResponseEntity.ok().body(servicePriceRepository.save(model));
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(String id) {
-    if (!this.vehicleRepository.existsById(id)) {
+    if (!this.servicePriceRepository.existsById(id)) {
       return ResponseEntity.notFound().build();
     }
 
-    vehicleRepository.deleteById(id);
+    servicePriceRepository.deleteById(id);
     return ResponseEntity.noContent().build();
   }
 }
