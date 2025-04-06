@@ -17,11 +17,11 @@ public class WashingPlace implements WithId {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @NotNull
   @Column(name = "washing_yard_id")
   private String washingYardId;
 
   @NotNull
   @Min(1)
+  @Column(unique = true)
   private Integer position;
 }

@@ -3,6 +3,7 @@ package me.rogerioferreira.lavajato.domain.entities;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +23,7 @@ public class WashingYard implements WithId {
   private String id;
 
   @Size(min = 1)
-  @OneToMany()
+  @OneToMany(cascade = CascadeType.REMOVE)
   @JoinColumn(name = "washing_yard_id")
   private List<WashingPlace> washingPlaces;
 
