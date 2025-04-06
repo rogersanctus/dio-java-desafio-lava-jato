@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import me.rogerioferreira.lavajato.application.services.WashingYardService;
 import me.rogerioferreira.lavajato.domain.entities.WashingYard;
 import me.rogerioferreira.lavajato.domain.repositories.WashingYardRepository;
-import me.rogerioferreira.lavajato.infra.services.WashingYardService;
 import me.rogerioferreira.lavajato.presentation.dtos.WashingYardCreationDto;
 import me.rogerioferreira.lavajato.presentation.dtos.WashingYardDto;
 

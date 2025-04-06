@@ -1,4 +1,4 @@
-package me.rogerioferreira.lavajato.infra.services;
+package me.rogerioferreira.lavajato.application.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

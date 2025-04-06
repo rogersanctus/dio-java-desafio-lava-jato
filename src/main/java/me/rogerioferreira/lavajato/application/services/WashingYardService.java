@@ -1,7 +1,6 @@
-package me.rogerioferreira.lavajato.infra.services;
+package me.rogerioferreira.lavajato.application.services;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
