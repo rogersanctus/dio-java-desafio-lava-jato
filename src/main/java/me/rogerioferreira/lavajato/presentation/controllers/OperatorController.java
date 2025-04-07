@@ -1,6 +1,7 @@
 package me.rogerioferreira.lavajato.presentation.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,7 @@ public class OperatorController {
   public ResponseEntity<Operator> create(@RequestBody OperatorDto operatorDto) {
     var model = this.operatorMapper.toModel(operatorDto);
 
+    model.setId(UUID.randomUUID().toString());
     this.validator.validate(model);
 
     return ResponseEntity

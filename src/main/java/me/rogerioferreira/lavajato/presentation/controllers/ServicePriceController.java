@@ -1,6 +1,7 @@
 package me.rogerioferreira.lavajato.presentation.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,7 @@ public class ServicePriceController {
   public ResponseEntity<ServicePrice> create(@RequestBody ServicePriceDto servicePrice) {
     var model = this.servicePriceMapper.toModel(servicePrice);
 
+    model.setId(UUID.randomUUID().toString());
     this.validator.validate(model);
 
     return ResponseEntity

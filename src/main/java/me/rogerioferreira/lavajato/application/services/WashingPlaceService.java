@@ -1,5 +1,7 @@
 package me.rogerioferreira.lavajato.application.services;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,7 @@ public class WashingPlaceService {
   ConstraintsValidator validator;
 
   @Transactional
-  public void save(WashingPlace place) throws IllegalArgumentException, ConstraintViolationException {
+  public WashingPlace save(WashingPlace place) throws IllegalArgumentException, ConstraintViolationException {
     var exists = place.getId() != null
         // When updating, only consider as existing when the Id is different
         ? this.washingPlaceRepository.existsByPositionAndIdNot(place.getPosition(), place.getId())
@@ -34,7 +36,11 @@ public class WashingPlaceService {
       throw new DuplicatedValueException("position", place.getPosition());
     }
 
+    if (place.getId() == null) {
+      place.setId(UUID.randomUUID().toString());
+    }
+
     this.validator.validate(place);
-    this.washingPlaceRepository.save(place);
+    return this.washingPlaceRepository.save(place);
   }
 }

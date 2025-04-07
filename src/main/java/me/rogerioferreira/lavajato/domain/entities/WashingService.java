@@ -4,23 +4,24 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import me.rogerioferreira.lavajato.infra.models.WithId;
+import lombok.NoArgsConstructor;
 import me.rogerioferreira.lavajato.domain.enums.ServiceType;
 import me.rogerioferreira.lavajato.domain.enums.WashingServiceStatus;
+import me.rogerioferreira.lavajato.infra.models.WithId;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class WashingService implements WithId {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
   @NotNull

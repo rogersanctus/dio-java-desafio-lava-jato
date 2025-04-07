@@ -2,6 +2,7 @@ package me.rogerioferreira.lavajato.application.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,15 +44,17 @@ public class WashingYardService {
         .map((dto) -> placeMapper.toModel(dto))
         .toList();
 
+    var yardId = UUID.randomUUID().toString();
     var model = this.mapper.toModel(washingYardDto);
+    model.setId(yardId);
     model.setWashingPlaces(null);
 
     this.validator.validate(model);
 
     var savedModel = this.washingYardRepository.save(model);
 
-    savePlaces(places, savedModel.getId());
-    savedModel.setWashingPlaces(new ArrayList<WashingPlace>(places));
+    var savedPlaces = savePlaces(places, yardId);
+    savedModel.setWashingPlaces(new ArrayList<WashingPlace>(savedPlaces));
 
     return savedModel;
   }
@@ -79,12 +82,13 @@ public class WashingYardService {
   }
 
   @Transactional
-  public void savePlaces(List<WashingPlace> places, String yardId) {
-    if (places.size() > 0) {
-      for (var place : places) {
-        place.setWashingYardId(yardId);
-        this.washingPlaceService.save(place);
-      }
-    }
+  public List<WashingPlace> savePlaces(List<WashingPlace> places, String yardId) {
+    return places
+        .stream()
+        .map(place -> {
+          place.setWashingYardId(yardId);
+          return this.washingPlaceService.save(place);
+        })
+        .toList();
   }
 }

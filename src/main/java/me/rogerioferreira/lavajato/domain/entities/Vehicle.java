@@ -1,8 +1,6 @@
 package me.rogerioferreira.lavajato.domain.entities;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,9 +8,9 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import me.rogerioferreira.lavajato.infra.models.WithId;
 import me.rogerioferreira.lavajato.domain.enums.VehicleType;
 import me.rogerioferreira.lavajato.domain.rules.Constraints;
+import me.rogerioferreira.lavajato.infra.models.WithId;
 
 @Entity
 @Data
@@ -20,7 +18,6 @@ import me.rogerioferreira.lavajato.domain.rules.Constraints;
 @AllArgsConstructor
 public class Vehicle implements WithId {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
   @NotNull

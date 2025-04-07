@@ -5,8 +5,6 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
@@ -19,7 +17,6 @@ import me.rogerioferreira.lavajato.infra.models.WithId;
 @Data
 public class WashingYard implements WithId {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
   @Size(min = 1)

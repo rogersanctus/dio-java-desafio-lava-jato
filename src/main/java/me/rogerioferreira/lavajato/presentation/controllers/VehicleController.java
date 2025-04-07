@@ -1,6 +1,7 @@
 package me.rogerioferreira.lavajato.presentation.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,7 @@ public class VehicleController {
   public ResponseEntity<Vehicle> create(@RequestBody VehicleDto vehicle) {
     var model = this.vehicleMapper.toModel(vehicle);
 
+    model.setId(UUID.randomUUID().toString());
     this.validator.validate(model);
 
     return ResponseEntity
