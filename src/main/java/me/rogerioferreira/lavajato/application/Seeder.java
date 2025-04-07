@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import me.rogerioferreira.lavajato.domain.entities.Operator;
 import me.rogerioferreira.lavajato.domain.entities.ServicePrice;

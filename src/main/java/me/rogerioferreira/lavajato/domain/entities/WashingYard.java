@@ -10,11 +10,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import me.rogerioferreira.lavajato.infra.models.WithId;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class WashingYard implements WithId {
   @Id
   private String id;
