@@ -13,7 +13,7 @@ import me.rogerioferreira.lavajato.domain.entities.WashingPlace;
 import me.rogerioferreira.lavajato.domain.entities.WashingService;
 import me.rogerioferreira.lavajato.domain.enums.ServiceType;
 import me.rogerioferreira.lavajato.domain.enums.WashingServiceStatus;
-import me.rogerioferreira.lavajato.domain.exceptions.EntityNotFoundException;
+import me.rogerioferreira.lavajato.domain.exceptions.RelatedEntityNotFoundException;
 import me.rogerioferreira.lavajato.domain.repositories.OperatorRespository;
 import me.rogerioferreira.lavajato.domain.repositories.ServicePriceRepository;
 import me.rogerioferreira.lavajato.domain.repositories.VehicleRepository;
@@ -66,25 +66,25 @@ public class WashingServiceService {
     return this.washingServiceRepository.save(washingService);
   }
 
-  private Operator getOperator(ObjectWithOnlyIdDto operator) throws EntityNotFoundException {
+  private Operator getOperator(ObjectWithOnlyIdDto operator) throws RelatedEntityNotFoundException {
     if (!this.operatorRespository.existsById(operator.id())) {
-      throw new EntityNotFoundException("Operator", "operator", operator.id());
+      throw new RelatedEntityNotFoundException("Operator", "operator", operator.id());
     }
 
     return new Operator(operator.id(), null);
   }
 
-  private Vehicle getVechicle(ObjectWithOnlyIdDto vehicle) throws EntityNotFoundException {
+  private Vehicle getVechicle(ObjectWithOnlyIdDto vehicle) throws RelatedEntityNotFoundException {
     if (!this.vehicleRespository.existsById(vehicle.id())) {
-      throw new EntityNotFoundException("Vehicle", "vehicle", vehicle.id());
+      throw new RelatedEntityNotFoundException("Vehicle", "vehicle", vehicle.id());
     }
 
     return new Vehicle(vehicle.id(), null, null, null, null, null, null);
   }
 
-  private WashingPlace getWashingPlace(ObjectWithOnlyIdDto washingPlace) throws EntityNotFoundException {
+  private WashingPlace getWashingPlace(ObjectWithOnlyIdDto washingPlace) throws RelatedEntityNotFoundException {
     if (!this.washingPlaceRepository.existsById(washingPlace.id())) {
-      throw new EntityNotFoundException("WashingPlace", "washingPlace", washingPlace.id());
+      throw new RelatedEntityNotFoundException("WashingPlace", "washingPlace", washingPlace.id());
     }
 
     return new WashingPlace(washingPlace.id(), null, null);

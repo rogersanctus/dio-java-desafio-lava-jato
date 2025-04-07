@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.validation.ConstraintViolationException;
 import me.rogerioferreira.lavajato.domain.exceptions.DuplicatedValueException;
 import me.rogerioferreira.lavajato.domain.exceptions.EntityNotFoundException;
+import me.rogerioferreira.lavajato.domain.exceptions.RelatedEntityNotFoundException;
 
 @RestControllerAdvice
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
@@ -45,8 +46,8 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     return ResponseEntity.badRequest().body(error);
   }
 
-  @ExceptionHandler(EntityNotFoundException.class)
-  public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
+  @ExceptionHandler(RelatedEntityNotFoundException.class)
+  public ResponseEntity<Object> handleEntityNotFoundException(RelatedEntityNotFoundException ex) {
     var error = new HashMap<String, Object>();
     var errors = new HashMap<String, String>();
 
