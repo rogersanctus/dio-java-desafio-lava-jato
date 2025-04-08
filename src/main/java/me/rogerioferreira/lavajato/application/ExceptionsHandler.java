@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.validation.ConstraintViolationException;
 import me.rogerioferreira.lavajato.domain.exceptions.DuplicatedValueException;
 import me.rogerioferreira.lavajato.domain.exceptions.EntityNotFoundException;
+import me.rogerioferreira.lavajato.domain.exceptions.InvalidLabelForEnumException;
+import me.rogerioferreira.lavajato.domain.exceptions.InvalidStateChangeException;
 import me.rogerioferreira.lavajato.domain.exceptions.RelatedEntityNotFoundException;
 
 @RestControllerAdvice
@@ -69,13 +71,24 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     return ResponseEntity.badRequest().body(error);
   }
 
+  @ExceptionHandler(InvalidStateChangeException.class)
+  public ResponseEntity<Object> handleInvalidStateException(InvalidStateChangeException ex) {
+    var error = new HashMap<String, Object>();
+    var errorMessage = new HashMap<String, String>();
+
+    error.put("error", errorMessage);
+    errorMessage.put("message", ex.getMessage());
+
+    return ResponseEntity.badRequest().body(error);
+  }
+
   @Override
   protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers,
       HttpStatusCode status, WebRequest request) {
     var error = new HashMap<String, Object>();
     var errors = new HashMap<String, String>();
 
-    if (ex.getCause() instanceof InvalidFormatException invalidFormatException) {
+    if (ex.getRootCause() instanceof InvalidFormatException invalidFormatException) {
       error.put("errors", errors);
       var field = invalidFormatException.getPath().isEmpty() ? "unknown"
           : invalidFormatException.getPath().get(0).getFieldName();
@@ -95,6 +108,10 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
       }
 
       errors.put(field, fieldError);
+
+      return ResponseEntity.badRequest().body(error);
+    } else if (ex.getRootCause() instanceof InvalidLabelForEnumException invalidLabelForEnumException) {
+      error.put("message", invalidLabelForEnumException.getMessage());
 
       return ResponseEntity.badRequest().body(error);
     }

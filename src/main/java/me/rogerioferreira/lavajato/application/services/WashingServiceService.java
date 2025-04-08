@@ -14,6 +14,7 @@ import me.rogerioferreira.lavajato.domain.entities.WashingService;
 import me.rogerioferreira.lavajato.domain.enums.ServiceType;
 import me.rogerioferreira.lavajato.domain.enums.WashingServiceStatus;
 import me.rogerioferreira.lavajato.domain.exceptions.EntityNotFoundException;
+import me.rogerioferreira.lavajato.domain.exceptions.InvalidStateChangeException;
 import me.rogerioferreira.lavajato.domain.exceptions.RelatedEntityNotFoundException;
 import me.rogerioferreira.lavajato.domain.repositories.OperatorRespository;
 import me.rogerioferreira.lavajato.domain.repositories.ServicePriceRepository;
@@ -76,6 +77,13 @@ public class WashingServiceService {
     }
 
     var washingService = mayBeWashingService.get();
+    var nextStatuses = washingService.getStatus().nextStatuses;
+
+    if (nextStatuses.stream().noneMatch(status -> status.equals(washingServiceStatusDto.status().label))) {
+      throw new InvalidStateChangeException(washingService.getStatus().label, washingServiceStatusDto.status().label,
+          nextStatuses);
+    }
+
     washingService.setStatus(washingServiceStatusDto.status());
 
     return this.washingServiceRepository.save(washingService);
