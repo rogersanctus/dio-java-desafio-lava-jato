@@ -1,16 +1,16 @@
 @startuml
 class WashingYard {
   - List<WashingPlace> washingPlaces
-  - OffsetDateTime openingTime
-  - OffsetDateTime closingTime
+  - OffsetTime openingTime
+  - OffsetTime closingTime
 }
 
 class WashingPlace {
-  int position
+  - Integer position
 }
 
 class Vehicle {
-  - VehicleType type
+  - VehicleType vehicleType
   - String ownerName;
   - String licensePlate;
   - String color;
@@ -19,23 +19,27 @@ class Vehicle {
 }
 
 class ServicePrice {
-  - ServiceType type
+  - ServiceType serviceType
   - BigDecimal price
 }
 
-class Operator {}
+class Operator {
+  - String name
+}
 
 class WashingService {
   - Operator operator
   - Vehicle vehicle
   - WashingPlace washingPlace
   - ServiceType serviceType
-  - BigDecimal totalToPay
+  - WashingServiceStatus status
   - OffsetDateTime serviceTime
   - WashingServiceStatus status
+  - BigDecimal totalToPay
 }
 
 enum WashingServiceStatus {
+  + WAITING
   + IN_PROGRESS
   + FINISHED
   + CANCELED
@@ -51,10 +55,11 @@ enum ServiceType {
   + COMPLETE
 }
 
-WashingService "1" --* "1" Vehicle
-WashingService "1" --* "1" Operator
-WashingService "1" --* "1" WashingPlace
-WashingService -- ServiceType
+WashingService "*" --* "1" Vehicle
+WashingService "*" --* "1" Operator
+WashingService "*" --* "1" WashingPlace
+WashingService --* WashingServiceStatus
+WashingService --* ServiceType
 WashingService -- ServicePrice
 
 Vehicle --* VehicleType
