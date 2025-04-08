@@ -12,6 +12,10 @@ A aplicação é uma API para sistema de Lava a Jato. É possível fazer control
 
 Via swagger em: http://localhost:8080/swagger-ui/index.html. O projeto precisa estar em execução. Vejo como na seção abaixo.
 
+## Diagrama de classes:
+
+![Diagrama de Classes](https://www.plantuml.com/plantuml/proxy?fmt=svg&cache=no&src=https://raw.github.com/rogersanctus/dio-java-desafio-lava-jato/master/dia-class.puml)
+
 ## Rodando o projeto:
 
 Se não tiver o gradle instalado, execute o comando abaixo:
