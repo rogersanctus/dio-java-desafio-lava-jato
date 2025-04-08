@@ -1,16 +1,12 @@
-# Projeto para desafio dio.me - Java Design Patterns
+# Projeto para desafio dio.me - Java Desafio Lava Jato
 
 ## O desafio:
 
-Criar uma aplicação Java, pode ser com Spring Boot, que aplique os conceitos de Design Patterns.
+Criar uma aplicação Java, com Spring Boot, que aplique os conhecimentos adquiridos sobre criação de APIs com framework Spring.
 
 ## Sobre a Aplicação
 
-A aplicação tem como objetivo demonstrar o uso de design patterns em uma aplicação Java com Spring Boot.
-
-A ideia do projeto é uma API fictícia de recebimento de pagamentos via PIX. Podem existir vários serviços que façam a intermediação dos pagamentos, e cada um deles pode ter uma faixa de tarifas diferentes.
-E cada usuário do sistema recebe uma cobrança de tarifas dependendo do seu volume de vendas. Quando o usário inicia uma cobrança pela API, o sistema decide qual serviço externo será utilizado de acordo
-com a tarifa deste usuário.
+A aplicação é uma API para sistema de Lava a Jato. É possível fazer controle de serviços (limpeza de veículos), operadores, veículos, tipos de serviços e seus preços e o andamento de cada serviço.
 
 ## Documentação da API
 
