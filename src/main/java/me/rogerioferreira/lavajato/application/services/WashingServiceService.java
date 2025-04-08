@@ -13,6 +13,7 @@ import me.rogerioferreira.lavajato.domain.entities.WashingPlace;
 import me.rogerioferreira.lavajato.domain.entities.WashingService;
 import me.rogerioferreira.lavajato.domain.enums.ServiceType;
 import me.rogerioferreira.lavajato.domain.enums.WashingServiceStatus;
+import me.rogerioferreira.lavajato.domain.exceptions.EntityNotFoundException;
 import me.rogerioferreira.lavajato.domain.exceptions.RelatedEntityNotFoundException;
 import me.rogerioferreira.lavajato.domain.repositories.OperatorRespository;
 import me.rogerioferreira.lavajato.domain.repositories.ServicePriceRepository;
@@ -22,6 +23,7 @@ import me.rogerioferreira.lavajato.domain.repositories.WashingServiceRepository;
 import me.rogerioferreira.lavajato.domain.rules.ConstraintsValidator;
 import me.rogerioferreira.lavajato.presentation.dtos.ObjectWithOnlyIdDto;
 import me.rogerioferreira.lavajato.presentation.dtos.WashingServiceCreationDto;
+import me.rogerioferreira.lavajato.presentation.dtos.WashingServiceStatusDto;
 
 @Service
 public class WashingServiceService {
@@ -62,6 +64,19 @@ public class WashingServiceService {
         price);
 
     this.validator.validate(washingService);
+
+    return this.washingServiceRepository.save(washingService);
+  }
+
+  public WashingService updateStatus(String id, WashingServiceStatusDto washingServiceStatusDto) {
+    var mayBeWashingService = this.washingServiceRepository.findById(id);
+
+    if (mayBeWashingService.isEmpty()) {
+      throw new EntityNotFoundException("WashingService", id);
+    }
+
+    var washingService = mayBeWashingService.get();
+    washingService.setStatus(washingServiceStatusDto.status());
 
     return this.washingServiceRepository.save(washingService);
   }

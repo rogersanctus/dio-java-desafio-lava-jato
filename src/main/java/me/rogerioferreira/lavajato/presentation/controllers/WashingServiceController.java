@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import me.rogerioferreira.lavajato.application.services.WashingServiceService;
 import me.rogerioferreira.lavajato.domain.entities.WashingService;
 import me.rogerioferreira.lavajato.domain.repositories.WashingServiceRepository;
 import me.rogerioferreira.lavajato.presentation.dtos.WashingServiceCreationDto;
+import me.rogerioferreira.lavajato.presentation.dtos.WashingServiceStatusDto;
 
 @RestController
 @RequestMapping("/washing-services")
@@ -49,6 +52,14 @@ public class WashingServiceController {
     return ResponseEntity
         .status(HttpStatus.CREATED)
         .body(washingServiceRepository.save(model));
+  }
+
+  @PatchMapping("/atualizar-status/{id}")
+  public ResponseEntity<WashingService> updateStatus(@PathVariable("id") String id,
+      @RequestBody WashingServiceStatusDto washingServiceStatusDto) {
+    var model = this.washingServiceService.updateStatus(id, washingServiceStatusDto);
+
+    return ResponseEntity.ok().body(washingServiceRepository.save(model));
   }
 
   @DeleteMapping("/{id}")
