@@ -16,6 +16,10 @@ Via swagger em: http://localhost:8080/swagger-ui/index.html. O projeto precisa e
 
 ![Diagrama de Classes](https://www.plantuml.com/plantuml/proxy?fmt=svg&cache=no&src=https://raw.github.com/rogersanctus/dio-java-desafio-lava-jato/master/dia-class.puml)
 
+## Diagrama de Estados - transições de WashingServiceStatus:
+
+![Diagrama de Classes](https://www.plantuml.com/plantuml/proxy?fmt=svg&cache=no&src=https://raw.github.com/rogersanctus/dio-java-desafio-lava-jato/master/dia-states.puml)
+
 ## Rodando o projeto:
 
 Se não tiver o gradle instalado, execute o comando abaixo:

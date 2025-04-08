@@ -1,0 +1,16 @@
+@startuml
+hide empty description
+
+state WAITING
+state IN_PROGRESS
+state FINISHED
+state CANCELED
+
+[*] --> WAITING
+WAITING --> CANCELED
+WAITING --> IN_PROGRESS
+IN_PROGRESS -down-> FINISHED
+IN_PROGRESS --> CANCELED
+CANCELED -down-> [*]
+FINISHED -down-> [*]
+@enduml
