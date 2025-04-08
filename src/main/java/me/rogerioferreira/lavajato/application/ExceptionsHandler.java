@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -44,6 +45,17 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     errors.put(ex.getField(), ex.getMessage());
 
     return ResponseEntity.badRequest().body(error);
+  }
+
+  @ExceptionHandler(EntityNotFoundException.class)
+  public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
+    var error = new HashMap<String, Object>();
+    var errorMessage = new HashMap<String, String>();
+
+    error.put("error", errorMessage);
+    errorMessage.put("message", ex.getMessage());
+
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
   }
 
   @ExceptionHandler(RelatedEntityNotFoundException.class)
